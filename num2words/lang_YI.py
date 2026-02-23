@@ -24,11 +24,11 @@ from .lang_EU import Num2Word_EU
 
 class Num2Word_YI(Num2Word_EU):
     CURRENCY_FORMS = {
-        'EUR': (('oyro', 'oyro'), ('tsent', 'tsent')),
-        'GBP': (('punt', 'punt'), ('peni', 'pents')),
-        'USD': (('dollar', 'dollar'), ('tsent', 'tsent')),
-        'CNY': (('yuan', 'yuan'), ('jiao', 'fen')),
-        'DEM': (('mark', 'mark'), ('pennik', 'pennik')),
+        'EUR': (("oyro", "oyro"), ("tsent", "tsent")),
+        'GBP': (("punt", "punt"), ("peni", "pents")),
+        'USD': (("dollar", "dollar"), ("tsent", "tsent")),
+        'CNY': (("yuan", "yuan"), ("jiao", "fen")),
+        'DEM': (("mark", "mark"), ("pennik", "pennik")),
     }
 
     GIGA_SUFFIX = "illiarde"
@@ -130,12 +130,12 @@ class Num2Word_YI(Num2Word_EU):
         if res == "eyn toyzntste" or res == "eyn hundertste":
             res = res.replace("eyn ", "", 1)
         # ... similarly for "millionste" etc.
-        res = re.sub(r'eyne ([a-z]+(illion|illiard)ste)$',
+        res = re.sub(r"eyne ([a-z]+(illion|illiard)ste)$",
                      lambda m: m.group(1), res)
         # Ordinals involving "Million" etc. are written without a space.
         # see https://de.wikipedia.org/wiki/Million#Sprachliches
-        res = re.sub(r' ([a-z]+(illion|illiard)ste)$',
-                     lambda m: m.group(1), res)
+        #res = re.sub(r' ([a-z]+(illion|illiard)ste)$',
+        #             lambda m: m.group(1), res)
 
         return res
 
@@ -143,7 +143,7 @@ class Num2Word_YI(Num2Word_EU):
         self.verify_ordinal(value)
         return str(value) + "."
 
-    def to_currency(self, val, currency='EUR', cents=True, separator=' un',
+    def to_currency(self, val, currency='EUR', cents=True, separator=" un",
                     adjective=False):
         result = super(Num2Word_YI, self).to_currency(
             val, currency=currency, cents=cents, separator=separator,
