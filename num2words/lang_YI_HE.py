@@ -71,12 +71,27 @@ class Num2Word_YI_HE(Num2Word_EU):
                              "זעכצן", "פֿופֿצן", "פֿערצן", "דרײַצן",
                              "צװעלף", "עלף", "צען", "נײַן", "אַכט",
                              "זיבן", "זעקס", "פֿינף", "פֿיר", "דרײַ",
-                             "צװײ", "אײנס", "נולל"]
+                             "צװײ", "אײנס", "נול"]
         self.ords = {"אײנס": "ערס",
                      "דרײַ": "דריט",
-                     "אַכט": "אַך",
+
+                     #HB wrong form of character
+                     #"אַכט": "אַך",
+                     "אַכט": "אַכ",
+
+                     #HB wrong form for -f in 12
+                     "צװעלף":"צװעלפֿ",
+                     #HB wrong -n in 17
+                     "זיבעצן": "זיבעצנ",
+
                      "זיבן": "זיב",
+
+                     #HB doesn't match -ik
                      "איק": "איקס",
+                     #HB 'carrying' aleph removed
+                     "יק": "יקס",
+                     
+
                      "ערט": "ערץ",
                      "נט": "נץ",
                      "איאָן": "איאָנס",
@@ -119,16 +134,21 @@ class Num2Word_YI_HE(Num2Word_EU):
     def to_ordinal(self, value):
         self.verify_ordinal(value)
         outword = self.to_cardinal(value).lower()
+        print(f"{outword=}")
         for key in self.ords:
+            print(f"{key=}")
             if outword.endswith(key):
+                print(f"{outword=} ends with {key=}")
                 outword = outword[:len(outword) - len(key)] + self.ords[key]
                 break
 
         res = outword + "טע"
 
         # Exception: "הונדערטסטע" is usually preferred over "אײן הונדערטסטע"
-        if res == "אײן טױזנצטע" or res == "אײן הונדערטסטע":
+        #if res == "אײן טױזנצטע" or res == "אײן הונדערטסטע":
+        if res == "אײןטױזנצטע" or res == "אײןהונדערץטע":
             res = res.replace("אײן", "", 1)
+            print(f"REMOVING ein from: {res=}")
         # ... similarly for "מילליִאָנסטע" etc.
         res = re.sub(r"אײנע ([אַ־ז]+(אילליִאָן|אילליִאַרד)סטע)$",
                      lambda m: m.group(1), res)
