@@ -134,11 +134,11 @@ class Num2Word_YI_HE(Num2Word_EU):
     def to_ordinal(self, value):
         self.verify_ordinal(value)
         outword = self.to_cardinal(value).lower()
-        print(f"{outword=}")
+        #print(f"{outword=}")
         for key in self.ords:
-            print(f"{key=}")
+            #print(f"{key=}")
             if outword.endswith(key):
-                print(f"{outword=} ends with {key=}")
+                #print(f"{outword=} ends with {key=}")
                 outword = outword[:len(outword) - len(key)] + self.ords[key]
                 break
 
@@ -165,7 +165,7 @@ class Num2Word_YI_HE(Num2Word_EU):
 
     def to_currency(self, val, currency='EUR', cents=True, separator=" און",
                     adjective=False):
-        result = super(Num2Word_YI, self).to_currency(
+        result = super(Num2Word_YI_HE, self).to_currency(
             val, currency=currency, cents=cents, separator=separator,
             adjective=adjective)
         # Handle exception, in german is "עיִן עוראָ" and not "עיִנס עוראָ"
